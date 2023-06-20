@@ -32,36 +32,6 @@ body {
     cursor: pointer;
 }
 
-.popup-appear {
-    position: relative;
-    animation: popup-appear 1s ease-in-out 0s 1 normal forwards;
-}
-
-.popup-disappear {
-    position: relative;
-    animation: popup-disappear 1s ease-in-out 0s 1 normal forwards;
-}
-
-@keyframes popup-appear {
-    0% {
-        top: 107%;
-    }
-
-    100% {
-        top: 5%;
-    }
-}
-
-@keyframes popup-disappear {
-    0% {
-        top: 5%;
-    }
-
-    100% {
-        top: 107%;
-    }
-}
-
 #log-in-title {
     position: relative;
     top: 7.5%;
@@ -86,19 +56,19 @@ body {
     margin: 0.33rem;
 }
 
-#email-input {
+.email-input {
     position: relative;
     top: 60%;
 }
 
-#password-input {
+.password-input {
     position: relative;
     top: 60%;
 }
 
-#submit-btn {
+.submit-btn {
     position: relative;
-    top: 215%;
+    top: 150%;
 
     width: 15vw;
     height: 5vh;
@@ -110,7 +80,7 @@ body {
     transition: 0.33s;
 }
 
-#submit-btn.hover-enter {
+.submit-btn.hover-enter {
     background-color: #a9a9a9;
     color: #2b2b2b;
 }
@@ -120,24 +90,12 @@ body {
     font-family: 'Times New Roman', Times, serif;
 }
 
-#remember-me-wrapper {
+#register-link, #login-link{
+    font-size: 1.5rem;
+    color: #fff;
+    text-decoration: none;
+    text-align: right;
+    
     position: relative;
-    top: 10%;
-    left: 3%;
-
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-#remember-me-checkbox {
-    width: 1.25rem;
-    height: 1.25rem;
-}
-
-#remember-me-label {
-    margin: 0.175rem;
-    color: white;
-    font-size: 1.25rem;
-    font-family: 'Times New Roman', Times, serif;
+    top: 325%;
 }

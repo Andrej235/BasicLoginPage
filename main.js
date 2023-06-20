@@ -1,43 +1,14 @@
-const popup = document.querySelector("#popup");
-const popupAppearClass = "popup-appear";
-const popupDisappearClass = "popup-disappear";
-let popupOnScreen = true;
+function AddHoverAnimationsToButton(btn) {
+    btn.addEventListener("mouseover", e => btn.classList.add("hover-enter"));
+    btn.addEventListener("mouseleave", e => btn.classList.remove("hover-enter"));
+}
 
-const popupBtn = document.querySelector("#popup-btn");
-popupBtn.addEventListener("click", e => {
-    console.log("Click");
-    if (popupOnScreen) {
-        popup.classList.remove(popupAppearClass);
-        popup.classList.add(popupDisappearClass);
-        popupOnScreen = false;
-    }
-    else {
-        popup.classList.remove(popupDisappearClass);
-        popup.classList.add(popupAppearClass);
-        popupOnScreen = true;
-    }
-});
-
-const loginBtn = document.querySelector("#submit-btn");
-const emailInputField = document.querySelector("#email-input");
-const passwordInputField = document.querySelector("#password-input");
-loginBtn.addEventListener("click", e => {
-    if (!InputValidation())
-        console.log("Invalid input");
-    else {
-        EnterNewUser(emailInputField.value, passwordInputField.value);
-        // console.log("Email: " + emailInputField.value + "\nPassword: " + passwordInputField.value);
-    }
-});
-
-loginBtn.addEventListener("mouseover", e => loginBtn.classList.add("hover-enter"));
-
-loginBtn.addEventListener("mouseleave", e => loginBtn.classList.remove("hover-enter"));
-
-function InputValidation() {
-    const email = emailInputField.value
-    const password = passwordInputField.value
-    if (email === "" || password === "")
+function ValidateEmail(email) {
+    // if (email !== "" && email.includes("@gmail.com")) console.log("Valid Email");
+    return email !== "" && email.includes("@gmail.com");
+}
+function ValidatePassword(password) {
+    if (password === "")
         return false;
 
     let passwordHasNum = false;
@@ -45,31 +16,36 @@ function InputValidation() {
         const c = password[i];
         if (!isNaN(parseFloat(c)) && isFinite(c)) {
             passwordHasNum = true;
-            // console.log("Found number in password");
             break;
         }
     }
-    const isPasswordValid = passwordHasNum && password.length >= 8;
-
-    if (!isPasswordValid) {
-        console.log("Invalid Password");
-        return false;
-    }
-
-    let isEmailValid = email.includes("@gmail.com");
-    if (!isEmailValid) {
-        console.log("Invalid Email");
-        return false;
-    }
-
-    return true;
+    // if (passwordHasNum && password.length >= 8) console.log("Valid password");
+    return passwordHasNum && password.length >= 8;
 }
 
+/*********************************************************************************************************/
+
+class User {
+    id;
+    email;
+    password;
+
+    constructor(id, email, password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
+
+    PrintOutUser() {
+        console.log(this.email + "\n" + this.password);
+    }
+}
 const users = [];
 let numOfUsers = 0;
+users[0] = new User(0, "banecane@gmail.com", "password123");
 
 function EnterNewUser(email, password) {
-    users[numOfUsers] = new User(email, password);
+    users[numOfUsers] = new User(email, password, numOfUsers);
     numOfUsers++;
     PrintUsers();
 }
@@ -80,16 +56,17 @@ function PrintUsers() {
     })
 }
 
-class User {
-    email;
-    password;
 
-    constructor(email, password) {
-        this.email = email;
-        this.password = password;
-    }
+function VerifyUserLogInDetails(email, password) {
+    const user = FindUserWithEmail(email);
+    if (user === undefined) return false;
 
-    PrintOutUser() {
-        console.log(this.email + "\n" + this.password);
+    return user.password === password;
+}
+
+function FindUserWithEmail(email) {
+    for (let i = 0; i < users.length; i++) {
+        if (users[i].email === email)
+            return users[i];
     }
 }
