@@ -24,21 +24,15 @@ const passwordInputField = document.querySelector("#password-input");
 loginBtn.addEventListener("click", e => {
     if (!InputValidation())
         console.log("Invalid input");
-    else
-    {
-        console.log("Email: " + emailInputField.value + "\nPassword: " + passwordInputField.value);
+    else {
+        EnterNewUser(emailInputField.value, passwordInputField.value);
+        // console.log("Email: " + emailInputField.value + "\nPassword: " + passwordInputField.value);
     }
 });
 
-loginBtn.addEventListener("mouseover", e => {
-    console.log("MouseEnter");
-    loginBtn.classList.add("hover-enter");
-});
+loginBtn.addEventListener("mouseover", e => loginBtn.classList.add("hover-enter"));
 
-loginBtn.addEventListener("mouseleave", e => {
-    console.log("MouseExit");
-    loginBtn.classList.remove("hover-enter");
-});
+loginBtn.addEventListener("mouseleave", e => loginBtn.classList.remove("hover-enter"));
 
 function InputValidation() {
     const email = emailInputField.value
@@ -51,7 +45,7 @@ function InputValidation() {
         const c = password[i];
         if (!isNaN(parseFloat(c)) && isFinite(c)) {
             passwordHasNum = true;
-            console.log("Found num");
+            // console.log("Found number in password");
             break;
         }
     }
@@ -69,4 +63,33 @@ function InputValidation() {
     }
 
     return true;
+}
+
+const users = [];
+let numOfUsers = 0;
+
+function EnterNewUser(email, password) {
+    users[numOfUsers] = new User(email, password);
+    numOfUsers++;
+    PrintUsers();
+}
+
+function PrintUsers() {
+    users.forEach(user => {
+        user.PrintOutUser();
+    })
+}
+
+class User {
+    email;
+    password;
+
+    constructor(email, password) {
+        this.email = email;
+        this.password = password;
+    }
+
+    PrintOutUser() {
+        console.log(this.email + "\n" + this.password);
+    }
 }
